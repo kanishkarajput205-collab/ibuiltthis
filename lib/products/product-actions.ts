@@ -20,6 +20,7 @@ export const addProductAction = async (
       return {
         success: false,
         message: "You must be signed in to submit a product",
+        errors: undefined,
       };
     }
 
@@ -27,6 +28,7 @@ export const addProductAction = async (
       return {
         success: false,
         message: "You must be a member of an organization to submit a product",
+        errors: undefined,
       };
     }
 
@@ -68,6 +70,7 @@ export const addProductAction = async (
     return {
       success: true,
       message: "Product submitted successfully! It will be reviewed shortly.",
+      errors: undefined,
     };
   } catch (error) {
     console.error(error);

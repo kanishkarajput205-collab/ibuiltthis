@@ -21,6 +21,10 @@ export default function ProductSubmitForm() {
   );
 
   const { errors, message, success } = state;
+  const getFieldErrors = (fieldName: string): string[] => {
+    if (!errors) return [];
+    return (errors as Record<string, string[]>)[fieldName] ?? [];
+  };
 
   return (
     <form className="space-y-6" action={formAction}>
@@ -45,7 +49,7 @@ export default function ProductSubmitForm() {
         placeholder="My Awesome Product"
         required
         onChange={() => {}}
-        error={errors?.name ?? []}
+        error={getFieldErrors("name")}
       />
       <FormField
         label="Slug"
@@ -55,7 +59,7 @@ export default function ProductSubmitForm() {
         required
         onChange={() => {}}
         helperText="URL-friendly version of your product name"
-        error={errors?.slug ?? []}
+        error={getFieldErrors("slug")}
       />
 
       <FormField
@@ -65,7 +69,7 @@ export default function ProductSubmitForm() {
         placeholder="A brief, catchy description"
         required
         onChange={() => {}}
-        error={errors?.tagline ?? []}
+        error={getFieldErrors("tagline")}
       />
 
       <FormField
@@ -75,7 +79,7 @@ export default function ProductSubmitForm() {
         placeholder="Tell us more about your product..."
         required
         onChange={() => {}}
-        error={errors?.description ?? []}
+        error={getFieldErrors("description")}
         textarea
       />
 
@@ -86,7 +90,7 @@ export default function ProductSubmitForm() {
         placeholder="https://yourproduct.com"
         required
         onChange={() => {}}
-        error={errors?.websiteUrl ?? []}
+        error={getFieldErrors("websiteUrl")}
         helperText="Enter your product's website or landing page"
       />
       <FormField
@@ -96,7 +100,7 @@ export default function ProductSubmitForm() {
         placeholder="AI, Productivity, SaaS"
         required
         onChange={() => {}}
-        error={errors?.tags ?? []}
+        error={getFieldErrors("tags")}
         helperText="Comma-separated tags (e.g., AI, SaaS, Productivity)"
       />
 
