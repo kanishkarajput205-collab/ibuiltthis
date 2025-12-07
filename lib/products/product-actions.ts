@@ -1,21 +1,18 @@
 "use server";
 
-import { auth, currentUser } from "@clerk/nextjs/server";
-import { productSchema } from "./product-validations";
 import { db } from "@/db";
 import { products } from "@/db/schema";
-import z from "zod";
 import { FormState } from "@/types";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { eq, sql } from "drizzle-orm";
-import { refresh, revalidatePath } from "next/cache";
+import { revalidatePath } from "next/cache";
+import z from "zod";
+import { productSchema } from "./product-validations";
 
 export const addProductAction = async (
   prevState: FormState,
   formData: FormData
 ) => {
-  console.log(formData);
-  //auth
-
   try {
     const { userId, orgId } = await auth();
 
@@ -32,8 +29,6 @@ export const addProductAction = async (
         message: "You must be a member of an organization to submit a product",
       };
     }
-
-    //data
 
     const user = await currentUser();
     const userEmail = user?.primaryEmailAddress?.emailAddress || "anonymous";
@@ -57,7 +52,6 @@ export const addProductAction = async (
     const tagsArray = tags ? tags.filter((tag) => typeof tag === "string") : [];
 
     //transform the data
-
     await db.insert(products).values({
       name,
       slug,
